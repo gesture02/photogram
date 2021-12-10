@@ -39,7 +39,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/auth/signup")
-	public @ResponseBody String signup(@Valid SignupReqDto signupReqDto, BindingResult bindingResult) { //key=value(x-www-form-urlencoded)
+	public String signup(@Valid SignupReqDto signupReqDto, BindingResult bindingResult) { //key=value(x-www-form-urlencoded)
 	//controller인데 responseBody가 앞에 있으면 data를 return
 		if (bindingResult.hasErrors()) {
 			Map<String,String> errorMap = new HashMap<>();
