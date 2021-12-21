@@ -1,11 +1,17 @@
 package com.cos.photogramstart.service;
 
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cos.photogramstart.domain.subscribe.Subscribe;
 import com.cos.photogramstart.domain.subscribe.SubscribeRepository;
 import com.cos.photogramstart.handler.ex.CustomApiException;
+import com.cos.photogramstart.web.dto.subscribe.SubscribeDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +20,31 @@ import lombok.RequiredArgsConstructor;
 public class SubscribeService {
 	
 	private final SubscribeRepository subscribeRepository;
+	private final EntityManager em;
+	
+	@Transactional(readOnly = true)
+	public List<SubscribeDto> subscribeList(int principalId, int pageUserId){
+		
+		//쿼리 완성
+		StringBuffer sb = new StringBuffer();
+		sb.append("SELECT u.id, u.username, u.profileImageUrl, ");
+		sb.append("if((SELECT 1 FROM subscribe WHERE fromUserId = ? AND toUserId = u.id), 1, 0) subscribeState, ");
+		sb.append("if((? = u.id), 1, 0) equalUserState ");
+		sb.append("FROM user u INNER JOIN subscribe s ");
+		sb.append("ON u.id = s.toUserId ");
+		sb.append("WHERE s.fromUserId = ?"); //세미콜론 뺄것
+		
+		Query query = em.createNativeQuery(sb.toString())
+				.setParameter(1, principalId)
+				.setParameter(2, principalId)
+				.setParameter(3, pageUserId);
+		
+		//쿼리 실행 QLRM라이브러리 사용
+		JpaResultMapper result = new JpaResultMapper();
+		List<SubscribeDto> subscribeDtos = result.list(query, SubscribeDto.class);
+		
+		return subscribeDtos;
+	}
 	
 	@Transactional
 	public void subscribe(int fromUserId, int toUserId) {
