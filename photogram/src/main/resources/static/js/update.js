@@ -3,7 +3,7 @@ function update(userId, event) {
 	
 	event.preventDefault();
 	
-	let data = $("#profileUpdate").serialize();
+	let data = $("#profileUpdate").serialize(); // key=value형태
 	
 	$.ajax({
 		type: "put",
