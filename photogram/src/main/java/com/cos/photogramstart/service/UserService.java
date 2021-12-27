@@ -37,7 +37,7 @@ public class UserService {
 		UUID uuid = UUID.randomUUID();
 		String imageFileName = uuid+"_"+profileImageFile.getOriginalFilename();
 		
-		Path imageFilePath = Paths.get(profileImageFile + imageFileName);
+		Path imageFilePath = Paths.get(uploadFolder + imageFileName);
 		
 		// 통신, I/O가 일어날 때 -> 예외가 발생할 수 있음
 		try {
