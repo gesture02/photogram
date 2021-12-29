@@ -14,6 +14,7 @@ import javax.persistence.PrePersist;
 
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,9 +37,11 @@ public class Comment {
 	// 댓글 하나 select : user, image 1개씩가져옴 (무리x)
 	// 반면에 유저를 select : 유저의 모든 댓글, 모든 사진을 매번가져옴 -> 그래서 LAZY 사용
 	// 한번 select 할 때 같이 오는게 여러개 -> LAZY, 하나 -> EAGER
+	@JsonIgnoreProperties({"images"})
 	@JoinColumn(name="userId")
 	@ManyToOne(fetch = FetchType.EAGER)
 	private User user;
+	
 	@JoinColumn(name="imageId")
 	@ManyToOne
 	private Image image;

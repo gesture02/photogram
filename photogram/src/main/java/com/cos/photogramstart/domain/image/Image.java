@@ -11,11 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.ForeignKey;
 
+import com.cos.photogramstart.domain.comment.Comment;
 import com.cos.photogramstart.domain.likes.Likes;
 import com.cos.photogramstart.domain.subscribe.Subscribe;
 import com.cos.photogramstart.domain.user.User;
@@ -51,6 +53,11 @@ public class Image {
 	private List<Likes> likes;
 	
 	// 이미지 댓글
+	@OrderBy("id DESC")
+	@JsonIgnoreProperties({"image"})
+	@OneToMany(mappedBy = "image")//fk에 대한 자바 변수
+	private List<Comment> comments;
+	
 	
 	@Transient 	//DB에 칼럼이 만들어지지 않는다.
 	private boolean likeState;
