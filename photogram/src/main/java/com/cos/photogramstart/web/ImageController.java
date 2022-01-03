@@ -26,6 +26,7 @@ public class ImageController {
 	public String story() {
 		return "image/story";
 	}
+	
 	@GetMapping("/image/popular")
 	public String popular(Model model) {
 		
@@ -33,10 +34,12 @@ public class ImageController {
 		model.addAttribute("images", images);
 		return "image/popular";
 	}
+	
 	@GetMapping("/image/upload")
 	public String upload() {
 		return "image/upload";
 	}
+	
 	@PostMapping("/image")
 	public String imageUpload(ImageUploadDto imageUploadDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 		
