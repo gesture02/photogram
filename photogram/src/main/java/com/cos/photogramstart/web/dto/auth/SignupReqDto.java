@@ -14,13 +14,13 @@ import lombok.Data;
 public class SignupReqDto {
 	
 	@Size(min = 2, max = 20)
-	@NotBlank()
+	@NotBlank
 	private String username;
-	@NotBlank()
+	@NotBlank
 	private String password;
-	@NotBlank()
+	@NotBlank
 	private String email;
-	@NotBlank()
+	@NotBlank
 	private String name;
 	
 	public User toEntity() {

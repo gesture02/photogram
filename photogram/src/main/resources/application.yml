@@ -35,6 +35,13 @@ spring:
     user:
       name: test
       password: 1234   
+    oauth2:      client:        registration:
+          facebook:
+            client-id: 
+            client-secret: 
+            scope:
+            - public_profile
+            - email
 
 file:
   path: E:/photogramUpload/

@@ -20,11 +20,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
+@Builder
 public class User {
 	
 	@Id
